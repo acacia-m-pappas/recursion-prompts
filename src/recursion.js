@@ -105,7 +105,7 @@ var exponent = function(base, exp) {
   if (exp === 0 ){
   	  return 1; 
   } else if (exp < 0){
-  	var y = exponent(base, -exp - 1)
+  	var y = base * exponent(base, -exp - 1)
   	  return 1/y;
   } else {
   	  return base * exponent(base, exp - 1);
@@ -113,20 +113,66 @@ var exponent = function(base, exp) {
 };
 
 // 8. Determine if a number is a power of two.
-// powerOfTwo(1); // true
-// powerOfTwo(16); // true
-// powerOfTwo(10); // false
+// powerOfTwo(1); // true 1*1 =1
+// powerOfTwo(16); // true 4*4 =16
+// powerOfTwo(10); // false 
+
+// 16 / 2 = 8 >> 8 * 8 = 64 >> 64 !== 16 >> false
+// 8 / 2 = 4 >> 4 * 4 = 16 >> 16 === 16 >> true
+
+//10 / 2 = 5 >> 5 * 5 = 25 >> 25 !== 10 >> false
+//5 /2 ...
+
+//base cases:
+//if n * n === n return true
+//if n < 1 && n > 0 return false 
+
+//recursive case: 
+// return n / 2
 
 //reverse fractal
 var powerOfTwo = function(n) {
+  var base = n; 
+  var result; 
+  
+  var divide = function(n){
+      if (n === 0 || n < 1){
+        result = false; 
+      } else if (n * n === base || n === 1){
+          result = true; 
+      } else {
+          return divide(n/2);
+      }
+  }
+  
+  divide(base); 
+  return result; 
 };
 
 // 9. Write a function that reverses a string.
-var reverse = function(string) {
+
+//input: 'acacia'
+//output: aicaca
+
+//base case: counter === array.length
+//recursive: grab first item and push it to the end
+//caciaa >> aciaac >>ciaaca >> ...
+var reverse = function(string){
+  
+  if(string === ""){
+  	return "";
+  } else {
+  	return reverse(string.substr(1)) + string.charAt(0);
+  }
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  if(string === reverse(string)){
+  	return true; 
+  } else {
+  	return false; 
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -135,6 +181,11 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+	if(x < y){
+		return x; 
+	} else {
+		return modulo(x - y, y);
+	}
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
