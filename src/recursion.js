@@ -191,8 +191,18 @@ var modulo = function(x, y) {
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+    if(y === 0){
+        return 0;
+    } else if(x < 0 && y < 0){
+        return multiply(x, y + 1) - x;
+    } else if (x < 0 && y > 0){
+        return multiply(x, y - 1) + x; 
+    } else if (x > 0 && y < 0){
+        return multiply(x, y + 1) - x;
+    } else {
+        return multiply(x, y - 1) + x;
+    }
 };
-
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
